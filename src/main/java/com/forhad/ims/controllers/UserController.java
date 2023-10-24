@@ -23,11 +23,6 @@ public class UserController {
 
 	@Autowired
 	public UserRepository userRepository;
-	
-	@RequestMapping("/")
-	public String loginregister() {
-		return "login-register.html";
-	}
 
 	@RequestMapping("/registerUser")
 	public String register(@ModelAttribute("user") User user, @RequestParam("role") UserRole role) {
