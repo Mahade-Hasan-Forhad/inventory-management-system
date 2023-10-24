@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Inventory Management System</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="style.css">
+<style>
+/* login-register.css */
+.container {
+	margin-top: 100px;
+}
+
+.card {
+	margin-bottom: 20px;
+	border: none;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+	background-color: #008080;
+	/* Update to a mild professional color */
+	color: white;
+	text-align: center;
+	padding: 10px;
+}
+
+.card-body {
+	background-color: #f8f9fa;
+	padding: 20px;
+}
+
+.form-control:focus {
+	border-color: #008080;
+	/* Update to a mild professional color */
+	box-shadow: none;
+}
+
+.btn {
+	background-color: #008080;
+	/* Update to a mild professional color */
+	border-color: #008080;
+	/* Update to a mild professional color */
+	color: white;
+	font-weight: bold;
+	transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+	background-color: #006666;
+	/* Update to a slightly darker shade */
+	border-color: #006666;
+	/* Update to a slightly darker shade */
+}
+
+/* Header */
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #008080;
+	/* Update to a mild professional color */
+	color: #fff;
+	padding: 10px 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header a {
+	color: #fff;
+	text-decoration: none;
+}
+
+header a:hover {
+	text-decoration: underline;
+}
+
+/* Main content */
+main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 30px;
+}
+
+h1 {
+	font-size: 36px;
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+.product-list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 20px;
+	margin-bottom: 30px;
+}
+
+.product-card {
+	width: 300px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	padding: 20px;
+	text-align: center;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+	transform: translateY(-5px);
+}
+
+.product-card h3 {
+	font-size: 24px;
+	margin-bottom: 10px;
+}
+
+.product-card p {
+	margin-bottom: 20px;
+}
+
+.product-card button {
+	background-color: #008080;
+	/* Update to a mild professional color */
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 20px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.product-card button:hover {
+	background-color: #006666;
+	/* Update to a slightly darker shade */
+}
+
+.product-request {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.product-request label {
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+.product-request select {
+	margin-bottom: 20px;
+	padding: 10px;
+	font-size: 16px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+
+.product-request button {
+	background-color: #008080;
+	/* Update to a mild professional color */
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 20px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.product-request button:hover {
+	background-color: #006666;
+	/* Update to a slightly darker shade */
+}
+
+/* General styles */
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f2f2f2;
+}
+
+.container {
+	margin: 0 auto;
+	max-width: 960px;
+	padding: 20px;
+}
+
+h2 {
+	text-align: center;
+	margin-bottom: 0px;
+	color: #008080;
+	/* Update to a mild professional color */
+	font-size: 36px;
+	font-weight: bold;
+}
+
+/* Footer */
+footer {
+	background-color: #333;
+	color: #fff;
+	padding: 10px;
+	text-align: center;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+	z-index: 9999; /* Ensure the footer is on top of other elements */
+}
+
+footer a {
+	color: #fff;
+	text-decoration: none;
+}
+
+footer a:hover {
+	text-decoration: underline;
+}
+
+/* Add extra padding to the bottom of the body to prevent content from being hidden by the fixed footer */
+body {
+	padding-bottom: 80px; /* Adjust the value as needed */
+}
+</style>
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+		<a class="navbar-brand" href="home">Inventory Management System</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item active"><a class="nav-link" href="home">Home</a></li>
+				<li class="nav-item active"><a class="nav-link"
+					href="addproduct">Add Product</a></li>
+				<li class="nav-item active"><a class="nav-link" href="addsales">Add
+						Sale</a></li>
+				<li class="nav-item active"><a class="nav-link" href="viewsale">Sales
+						Record</a></li>
+				<li class="nav-item active"><a class="nav-link"
+					href="searchproductpg">Search Product</a></li>
+				<li class="nav-item active"><a class="nav-link"
+					href="login-register">Log Out</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container">
+		<h2>Add Sale</h2>
+		<form class="form-horizontal" action="deleteproduct" method="POST">
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="producId">Product
+					Id:</label>
+				<div class="col-sm-10">
+					<input type="number" class="form-control" id="pId" name="pId"
+						placeholder="Enter product Id">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="customerName">Customer
+					Name:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="cName" name="cName"
+						placeholder="Enter customer name" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="productCategory">Category:</label>
+				<div class="col-sm-10">
+					<select class="form-control" id="category" name="category">
+						<option value="">--Select category--</option>
+						<option value="T-shirt">T-shirt</option>
+						<option value="Panjabi">Panjabi</option>
+						<option value="Hoodie">Hoodie</option>
+						<option value="Jacket">Jacket</option>
+						<option value="Sweatshirt">Sweatshirt</option>
+						<option value="Joggers">Joggers</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="color">Color:</label>
+				<div class="col-sm-10">
+					<select class="form-control" id="color" name="color">
+						<option value="">--Select color--</option>
+						<option value="Red">Red</option>
+						<option value="Blue">Blue</option>
+						<option value="Green">Green</option>
+						<option value="Black">Black</option>
+						<option value="White">White</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="productPrice">
+					Price:</label>
+				<div class="col-sm-10">
+					<input type="number" class="form-control" id="price" name="price"
+						placeholder="Enter product price">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="productQuantity">
+					Quantity:</label>
+				<div class="col-sm-10">
+					<input type="number" class="form-control" id="quantity"
+						name="quantity" placeholder="Enter product quantity">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="productSize">
+					Size:</label>
+				<div class="col-sm-10">
+					<select class="form-control" id="size" name="size">
+						<option value="">--Select size--</option>
+						<option value="M">M</option>
+						<option value="L">L</option>
+						<option value="XL">XL</option>
+						<option value="2XL">XXL</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="date">Date:</label>
+				<div class="col-sm-10">
+					<input type="date" class="form-control" id="date" name="date"
+						required>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="submit" id="" name="" class="btn btn-primary"
+						value="Add Sale">
+				</div>
+				<div th:text="${msg1}"></div>
+			</div>
+		</form>
+	</div>
+	<footer>
+		<p>
+			&copy; 2023 E Corp. All rights reserved. | <a href="#">Privacy
+				Policy</a> | <a href="#">Terms of Service</a>
+		</p>
+	</footer>
+</body>
+</html>
